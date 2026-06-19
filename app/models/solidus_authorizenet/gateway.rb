@@ -39,7 +39,7 @@ module SolidusAuthorizenet
       request.customerProfileId = customer_profile_id
 
       response = client.get_customer_profile(request)
-      success = response.messages.resultCode == ::::AuthorizeNet::API::MessageTypeEnum::Ok
+      success = response.messages.resultCode == ::AuthorizeNet::API::MessageTypeEnum::Ok
 
       log_response(:get_customer, response)
 
@@ -213,7 +213,7 @@ module SolidusAuthorizenet
 
         log_response(:capture, response)
 
-        response.messages.resultCode == ::::AuthorizeNet::API::MessageTypeEnum::Ok
+        response.messages.resultCode == ::AuthorizeNet::API::MessageTypeEnum::Ok
       end
     end
 
