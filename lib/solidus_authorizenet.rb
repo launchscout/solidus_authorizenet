@@ -1,3 +1,4 @@
+require "authorizenet"
 require "solidus_authorizenet/version"
 require "solidus_authorizenet/engine"
 
