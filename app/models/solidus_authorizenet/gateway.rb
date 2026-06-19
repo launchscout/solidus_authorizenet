@@ -39,7 +39,7 @@ module SolidusAuthorizenet
       request.customerProfileId = customer_profile_id
 
       response = client.get_customer_profile(request)
-      success = response.messages.resultCode == ::AuthorizeNet::API::MessageTypeEnum::Ok
+      success = response.messages.resultCode == ::::AuthorizeNet::API::MessageTypeEnum::Ok
 
       log_response(:get_customer, response)
 
@@ -207,13 +207,13 @@ module SolidusAuthorizenet
         request.transactionRequest = ::AuthorizeNet::API::TransactionRequestType.new
         request.transactionRequest.amount = amount / 100.0
         request.transactionRequest.refTransId = transaction_id
-        request.transactionRequest.transactionType = AuthorizeNet::API::TransactionTypeEnum::PriorAuthCaptureTransaction
+        request.transactionRequest.transactionType = ::AuthorizeNet::API::TransactionTypeEnum::PriorAuthCaptureTransaction
 
         response = client.create_transaction(request)
 
         log_response(:capture, response)
 
-        response.messages.resultCode == AuthorizeNet::API::MessageTypeEnum::Ok
+        response.messages.resultCode == ::::AuthorizeNet::API::MessageTypeEnum::Ok
       end
     end
 
@@ -244,7 +244,7 @@ module SolidusAuthorizenet
 
         log_response(:credit, response)
 
-        response.messages.resultCode == AuthorizeNet::API::MessageTypeEnum::Ok
+        response.messages.resultCode == ::AuthorizeNet::API::MessageTypeEnum::Ok
       end
     end
 
@@ -264,7 +264,7 @@ module SolidusAuthorizenet
 
         log_response(:void, response)
 
-        response.messages.resultCode == AuthorizeNet::API::MessageTypeEnum::Ok
+        response.messages.resultCode == ::AuthorizeNet::API::MessageTypeEnum::Ok
       end
     end
 
