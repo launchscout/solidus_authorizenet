@@ -242,9 +242,7 @@ module SolidusAuthorizenet
 
         response = client.create_transaction(request)
 
-        log_response(:credit, response)
-
-        response.messages.resultCode == ::AuthorizeNet::API::MessageTypeEnum::Ok
+        result(response, :credit)
       end
     end
 
@@ -262,9 +260,7 @@ module SolidusAuthorizenet
 
         response = client.create_transaction(request)
 
-        log_response(:void, response)
-
-        response.messages.resultCode == ::AuthorizeNet::API::MessageTypeEnum::Ok
+        result(response, :void)
       end
     end
 
@@ -279,6 +275,17 @@ module SolidusAuthorizenet
       error_text = response.messages&.messages&.first&.text
 
       Rails.logger.info "AuthorizeNetGateway: #{method}: #{error_code}: #{error_text}"
+    end
+
+    def result(response, method)
+      log_response(method, response)
+
+      if response.messages.resultCode == ::AuthorizeNet::API::MessageTypeEnum::Ok
+        true
+      else
+        error_text = response.transactionResponse&.errors&.first&.errorText || response.messages.message.first.text
+        ::ActiveMerchant::Billing::Response.new(false, error_text)
+      end
     end
 
     ##
