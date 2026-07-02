@@ -283,7 +283,7 @@ module SolidusAuthorizenet
       if response.messages.resultCode == ::AuthorizeNet::API::MessageTypeEnum::Ok
         true
       else
-        error_text = response.transactionResponse&.errors&.first&.errorText || response.messages.message.first.text
+        error_text = response.transactionResponse&.errors&.errors&.first&.errorText || response.messages.message.first.text
         ::ActiveMerchant::Billing::Response.new(false, error_text)
       end
     end
