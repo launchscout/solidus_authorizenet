@@ -88,8 +88,10 @@ module Spree
 
       ##
       # Tries to void a previously authorized payment.
+      # Returns false if void fails so Solidus falls back to issuing a refund.
       def try_void(payment)
-        gateway.void(payment.response_code, nil, nil)
+        response = gateway.void(payment.response_code, nil, nil)
+        response.success? ? response : false
       end
     end
   end
